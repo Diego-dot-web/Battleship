@@ -34,6 +34,7 @@ function Ship(lenght) {
 
 function Gameboard() {
   const board = [];
+  const missingShots = [];
 
   for (let i = 0; i < 8; i += 1) {
     board[i] = [];
@@ -46,19 +47,38 @@ function Gameboard() {
     ship.setCoordinates(x, y);
   };
 
+  const receiveAttack = (tryCor, shipCor, ship) => {
+    if (tryCor[0] === shipCor[0] && tryCor[1] === shipCor[1]) {
+      ship.hit();
+    } else {
+      missingShots.push(tryCor);
+    }
+  };
+
+  const checkSunkShip = (...ships) => {
+    const sunkedShips = ships.filter((ship) => ship.isSunk() === true);
+    const aliveShips = ships.filter((ship) => ship.isSunk() === false);
+
+    return { sunkedShips, aliveShips };
+  };
+
   const getBoard = () => board;
 
   return {
     getBoard,
     assignCordinates,
+    receiveAttack,
+    checkSunkShip,
   };
 }
 
-const ship1 = Ship(4);
+const ship1 = Ship(5);
+const ship2 = Ship(4);
 ship1.hit();
 ship1.hit();
+ship2.hit();
 const game = Gameboard();
 game.assignCordinates(ship1, 2, 0);
-console.log(ship1.getCoordinates());
+console.log(game.checkSunkShip(ship1, ship2));
 
 // console.log(ship1.isSunk());
