@@ -1,0 +1,18 @@
+:root {
+    color-scheme: dark;
+}
+
+#container {
+    background-color: blueviolet;
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(30px, 1fr));
+    grid-template-rows: repeat(10, minmax(30px, 1fr));
+}
+
+.square {
+    background-color: white;
+    border: 1px solid black;
+
+}

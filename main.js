@@ -37,9 +37,9 @@ function Gameboard() {
   const board = [];
   const missingShots = [];
 
-  for (let i = 0; i < 8; i += 1) {
+  for (let i = 0; i < 10; i += 1) {
     board[i] = [];
-    for (let j = 0; j < 8; j += 1) {
+    for (let j = 0; j < 10; j += 1) {
       board[i][j] = 0;
     }
   }
@@ -102,18 +102,39 @@ function Player(name) {
 
   return {
     name,
+    activePlayer,
     computerPlays,
     takeTurns,
   };
 }
 
-const ship1 = Ship(5);
-const ship2 = Ship(4);
-ship1.hit();
-ship1.hit();
-ship2.hit();
-const game = Gameboard();
-game.assignCordinates(ship1, 2, 0);
-console.log(game.checkSunkShip(ship1, ship2));
+function gameLoop() {
+  const player = Player();
+  const board = Gameboard();
+
+  const printBoard = (arr) => {
+    const container = document.querySelector('#container');
+    arr.forEach((row, indexRow) => {
+      row.forEach((column, indexCol) => {
+        const square = document.createElement('div');
+        square.dataset.row = indexRow;
+        square.dataset.column = indexCol;
+        square.className = 'square';
+
+        container.appendChild(square);
+      });
+    });
+  };
+
+  printBoard(board.getBoard());
+}
+
+gameLoop();
+
+// const ship1 = Ship(5);
+// const ship2 = Ship(4);
+// ship1.hit();
+// ship1.hit();
+// ship2.hit();
 
 // console.log(ship1.isSunk());
