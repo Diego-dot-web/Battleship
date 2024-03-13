@@ -29,6 +29,7 @@ function Ship(lenght) {
     hit,
     getCoordinates,
     setCoordinates,
+    lenght,
   };
 }
 
@@ -63,12 +64,46 @@ function Gameboard() {
   };
 
   const getBoard = () => board;
+  const getMissingShots = () => missingShots;
 
   return {
     getBoard,
     assignCordinates,
     receiveAttack,
     checkSunkShip,
+    getMissingShots,
+  };
+}
+
+function Player(name) {
+  const game = Gameboard();
+  let activePlayer;
+
+  const takeTurns = (player1, player2) => {
+    activePlayer = activePlayer === player1 ? player1 : player2;
+  };
+
+  const random = () => Math.floor(Math.random() * 10);
+
+  const computerPlays = (arr) => {
+    arr.forEach((coordinates) => {
+      coordinates.forEach(() => {
+        const number1 = random();
+        const number2 = random();
+
+        if (number1 === coordinates[0] && number2 === coordinates[1]) {
+          return;
+        }
+
+        game.receiveAttack([number1, number2]);
+      });
+    });
+  };
+
+  return {
+    name,
+    computerPlays,
+    takeTurns,
   };
 }
 
