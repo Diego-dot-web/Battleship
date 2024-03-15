@@ -4,15 +4,20 @@
 
 #container {
     background-color: blueviolet;
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
     display: grid;
     grid-template-columns: repeat(10, minmax(30px, 1fr));
     grid-template-rows: repeat(10, minmax(30px, 1fr));
+    margin: 10px;
 }
 
 .square {
     background-color: white;
     border: 1px solid black;
 
+}
+
+.capsule {
+    display: flex;
 }

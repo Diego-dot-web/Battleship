@@ -44,6 +44,25 @@ function Gameboard() {
     }
   }
 
+  const printBoard = (arr, playerName) => {
+    const capsule = document.querySelector('.capsule');
+    const container = document.createElement('div');
+    container.className = `${playerName}`;
+    container.id = 'container';
+    capsule.appendChild(container);
+    const table = document.querySelector(`.${playerName}`);
+    arr.forEach((row, indexRow) => {
+      row.forEach((column, indexCol) => {
+        const square = document.createElement('div');
+        square.dataset.row = indexRow;
+        square.dataset.column = indexCol;
+        square.className = 'square';
+
+        table.appendChild(square);
+      });
+    });
+  };
+
   const assignCordinates = (ship, x, y) => {
     ship.setCoordinates(x, y);
   };
@@ -63,15 +82,27 @@ function Gameboard() {
     return { sunkedShips, aliveShips };
   };
 
+  const handleClicks = () => {
+    const cells = document.querySelectorAll('.square');
+    cells.forEach((cell) => {
+      cell.addEventListener('click', () => {
+        const bar = cell;
+        bar.style.backgroundColor = 'lightblue';
+      });
+    });
+  };
+
   const getBoard = () => board;
   const getMissingShots = () => missingShots;
 
   return {
     getBoard,
+    printBoard,
     assignCordinates,
     receiveAttack,
     checkSunkShip,
     getMissingShots,
+    handleClicks,
   };
 }
 
@@ -108,28 +139,16 @@ function Player(name) {
   };
 }
 
-function gameLoop() {
+function gameLoop(player1, player2) {
   const player = Player();
   const board = Gameboard();
 
-  const printBoard = (arr) => {
-    const container = document.querySelector('#container');
-    arr.forEach((row, indexRow) => {
-      row.forEach((column, indexCol) => {
-        const square = document.createElement('div');
-        square.dataset.row = indexRow;
-        square.dataset.column = indexCol;
-        square.className = 'square';
-
-        container.appendChild(square);
-      });
-    });
-  };
-
-  printBoard(board.getBoard());
+  board.printBoard(board.getBoard(), player1);
+  board.printBoard(board.getBoard(), player2);
+  board.handleClicks();
 }
 
-gameLoop();
+gameLoop('uno', 'dos');
 
 // const ship1 = Ship(5);
 // const ship2 = Ship(4);
